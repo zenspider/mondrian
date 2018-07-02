@@ -11,7 +11,7 @@ class Mondrian < Graphics::Simulation
 
   def draw n
     super
-    fast_rect 100, 100, 100, 100, :black
+    fast_rect 100, 0, 20, h, :black
   end
 end
 
