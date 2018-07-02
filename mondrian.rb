@@ -10,7 +10,7 @@ class Mondrian < Graphics::Simulation
   def initialize
     super 800, 800
 
-    self.xs = 5.times.map { rand w }
+    self.xs = (0..w).step(40).to_a.sample rand(3..7)
   end
 
   def draw n
