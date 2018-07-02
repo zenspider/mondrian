@@ -11,7 +11,10 @@ class Mondrian < Graphics::Simulation
 
   def draw n
     super
-    fast_rect 100, 0, 20, h, :black
+
+    5.times do
+      fast_rect rand(w), 0, 20, h, :black
+    end
   end
 end
 
