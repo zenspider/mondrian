@@ -5,24 +5,38 @@ require "graphics"
 class Mondrian < Graphics::Simulation
   CLEAR_COLOR = :white
 
-  attr_accessor :xs, :ys
-
   def initialize
     super 800, 800
 
-    self.xs = (0..w).step(40).to_a.sample rand(3..7)
-    self.ys = (0..h).step(40).to_a.sample rand(3..7)
+    register_bodies random_coordinates(w, 3..7, 40).map { |x|
+      Stripe.new(self, x, 0, 20, h)
+    }
+
+    register_bodies random_coordinates(h, 3..7, 40).map { |y|
+      Stripe.new(self, 0, y, w, 20)
+    }
   end
 
-  def draw n
-    super
+  def random_coordinates max, range, step = 1
+    (0...max).step(step).to_a.sample rand range
+  end
 
-    xs.each do |x|
-      fast_rect x, 0, 20, h, :black
+  class Stripe < Graphics::Body
+    attr_accessor :width, :height
+
+    def initialize s, x, y, w, h
+      super s
+      self.x, self.y, self.width, self.height = x, y, w, h
     end
 
-    ys.each do |y|
-      fast_rect 0, y, w, 20, :black
+    def update
+      # do nothing
+    end
+
+    class View
+      def self.draw w, o
+        w.fast_rect o.x, o.y, o.width, o.height, :black
+      end
     end
   end
 end
